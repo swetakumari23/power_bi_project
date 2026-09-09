@@ -1,0 +1,30 @@
+table Table
+	lineageTag: 1d1f272a-926e-4ad8-87c6-4069e2125e17
+
+	column region
+		dataType: string
+		lineageTag: 9ab44b02-a1c9-4c4f-bfa2-2171cf00349a
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	column mail
+		dataType: string
+		lineageTag: 1b3bf426-45a1-4831-82e6-5fa16db19bd9
+		summarizeBy: none
+		sourceColumn: mail
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Table = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45W8ssvKslQ0lEKLk8tSXTQS87PVYrViVYKTy0uAYo6FpdkwERjAQ==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [region = _t, mail = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"region", type text}, {"mail", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

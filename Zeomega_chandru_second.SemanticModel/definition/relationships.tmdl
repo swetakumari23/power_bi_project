@@ -1,0 +1,9 @@
+relationship 8397377c-8d80-4faf-9e92-a34409caa853
+	joinOnDateBehavior: datePartOnly
+	fromColumn: SalesData.OrderDate
+	toColumn: LocalDateTable_013a8c28-57e3-49f7-a53b-88187fab6bc1.Date
+
+relationship 21cb11ff-460a-c45c-0742-8d2e6a2db872
+	fromColumn: SalesData.Region
+	toColumn: Table.region
+

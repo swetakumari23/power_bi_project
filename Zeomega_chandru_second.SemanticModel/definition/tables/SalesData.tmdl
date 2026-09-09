@@ -1,0 +1,142 @@
+table SalesData
+	lineageTag: 0ed777b0-3a5b-4c81-af9c-e04709932dbc
+
+	measure 'total revenue' = sumx(SalesData,SalesData[Quantity]*SalesData[UnitPrice])
+		lineageTag: 7183efac-0ceb-47d5-9cbc-aae5342d5518
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'total customer' = DISTINCTCOUNT(SalesData[CustomerName])
+		formatString: 0
+		lineageTag: d75a7df1-4653-47e4-b307-232e18140ae1
+
+	measure 'total order_Count' = DISTINCTCOUNT(SalesData[OrderID])
+		formatString: 0
+		lineageTag: 2b36c6ec-d4b5-49ff-8720-d593a983a188
+
+	column OrderID
+		dataType: string
+		lineageTag: b3472de5-af85-4039-a89f-bfafbbb5da38
+		summarizeBy: none
+		sourceColumn: OrderID
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c7264c2b-3a49-4868-bf9c-345a3a021772
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		variation Variation
+			isDefault
+			relationship: 8397377c-8d80-4faf-9e92-a34409caa853
+			defaultHierarchy: LocalDateTable_013a8c28-57e3-49f7-a53b-88187fab6bc1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CustomerName
+		dataType: string
+		lineageTag: f6d3c53c-de8d-40e5-bd99-8ae6d09dc6bb
+		summarizeBy: none
+		sourceColumn: CustomerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 435c6499-53fb-4dfc-82e2-5e6410a3302a
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 76b30149-1717-438d-acbd-867550d1ea83
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column SubCategory
+		dataType: string
+		lineageTag: 311ff757-5b40-4348-9799-44a7d292e712
+		summarizeBy: none
+		sourceColumn: SubCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product
+		dataType: string
+		lineageTag: 2a6daaed-cae3-4bd0-9d51-4e8c7d5e93f7
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 10c4bdc1-67b4-49be-8385-cb52c8f8c870
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		dataType: double
+		lineageTag: 58f93537-fd56-4856-aa11-ea2536bb910b
+		summarizeBy: sum
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Discount
+		dataType: double
+		lineageTag: 16dbed21-7dc4-4121-a67f-fffe8c7ff13e
+		summarizeBy: sum
+		sourceColumn: Discount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Sales
+		dataType: double
+		lineageTag: cb942682-6c12-4b2d-8a42-5a6a18d7d04c
+		summarizeBy: sum
+		sourceColumn: Sales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Profit
+		dataType: double
+		lineageTag: e147358e-f21e-4c3c-a594-d588badf4344
+		summarizeBy: sum
+		sourceColumn: Profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition SalesData = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\priya\Downloads\PowerBI_SQL_Interview_Practice_Dataset.xlsx"), null, true),
+				    SalesData_Sheet = Source{[Item="SalesData",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(SalesData_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"OrderID", type text}, {"OrderDate", type date}, {"CustomerName", type text}, {"Region", type text}, {"Category", type text}, {"SubCategory", type text}, {"Product", type text}, {"Quantity", Int64.Type}, {"UnitPrice", type number}, {"Discount", type number}, {"Sales", type number}, {"Profit", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

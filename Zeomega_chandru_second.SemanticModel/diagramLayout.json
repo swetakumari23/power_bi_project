@@ -1,0 +1,74 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 504,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "SalesData",
+          "nodeLineageTag": "0ed777b0-3a5b-4c81-af9c-e04709932dbc",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 380,
+            "y": 78
+          },
+          "nodeIndex": "Table",
+          "nodeLineageTag": "1d1f272a-926e-4ad8-87c6-4069e2125e17",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 664,
+            "y": 86
+          },
+          "nodeIndex": "Table (2)",
+          "nodeLineageTag": "cc9d4211-35a5-45a4-918c-9ea2bb47ff3a",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 948,
+            "y": 86
+          },
+          "nodeIndex": "Table (3)",
+          "nodeLineageTag": "ca82c8fb-4723-4cb7-8143-6237df9b3603",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

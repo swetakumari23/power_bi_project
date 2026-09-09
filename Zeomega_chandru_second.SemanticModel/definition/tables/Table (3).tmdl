@@ -1,0 +1,73 @@
+table 'Table (3)'
+	lineageTag: ca82c8fb-4723-4cb7-8143-6237df9b3603
+
+	column product
+		dataType: string
+		lineageTag: fe7afc85-0ea8-4615-b2e0-f3f34e537a99
+		summarizeBy: none
+		sourceColumn: product
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"Table (3)","TableItemName":"product (groups)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column Count
+		dataType: int64
+		formatString: 0
+		lineageTag: d28eff8f-227e-4d67-8e59-cc16bf4ee0f1
+		summarizeBy: sum
+		sourceColumn: Count
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'product (groups)' =
+			SWITCH(
+				TRUE,
+				ISBLANK('Table (3)'[product]),
+				"(Blank)",
+				'Table (3)'[product] IN {"iphone11",
+					"iphone12",
+					"iphone13"},
+				"iphone11 & iphone12 & iphone13",
+				'Table (3)'[product] IN {"iphone14",
+					"iphone15"},
+				"iphone14 & iphone15",
+				'Table (3)'[product]
+			)
+		lineageTag: 8f0ab092-923b-4067-8279-92492ac6c145
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "Table (3)"
+				          }
+				        },
+				        "Property": "product"
+				      }
+				    }
+				  ]
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"t","Entity":"Table (3)"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"t"}},"Property":"product"}}],"GroupItems":[{"DisplayName":"(Blank)","BlankDefaultPlaceholder":true},{"DisplayName":"iphone11 & iphone12 & iphone13","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"t"}},"Property":"product"}}],"Values":[[{"Literal":{"Value":"'iphone11'"}}],[{"Literal":{"Value":"'iphone12'"}}],[{"Literal":{"Value":"'iphone13'"}}]]}}},{"DisplayName":"iphone14 & iphone15","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"t"}},"Property":"product"}}],"Values":[[{"Literal":{"Value":"'iphone14'"}}],[{"Literal":{"Value":"'iphone15'"}}]]}}}]}
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Table (3)' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WyizIyM9LNTRU0lEyUorVgQsYAQUMkQUwVBgDBYyRBUzQBYzRzTCFqIgFAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [product = _t, Count = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"product", type text}, {"Count", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

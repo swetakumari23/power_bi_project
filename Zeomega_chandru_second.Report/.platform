@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Zeomega_chandru_second"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2628390f-8ade-43a0-a3f7-fbeb21f03aff"
+  }
+}

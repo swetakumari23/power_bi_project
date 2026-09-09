@@ -1,0 +1,33 @@
+table 'Table (2)'
+	lineageTag: cc9d4211-35a5-45a4-918c-9ea2bb47ff3a
+
+	column Name
+		dataType: string
+		lineageTag: 330f2489-5bb0-4d7f-92c9-0f21c52ab7fe
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Test sub'
+		dataType: string
+		lineageTag: dfac765d-305b-494b-9cf6-8bf2703a543e
+		summarizeBy: none
+		sourceColumn: Test sub
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Table (2)' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45W8srPyFPSUXLNS8/JLM5QitWBCwVkVBZnJhcjC/kmlmRABHwzs1PR1ECFEGocczKTU5HNjgUA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Name = _t, subject = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Name", type text}, {"subject", type text}}),
+				    #"Grouped Rows" = Table.Group(#"Changed Type", {"Name"}, {{"Test sub", each Text.Combine([subject],","), type nullable text}})
+				in
+				    #"Grouped Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
